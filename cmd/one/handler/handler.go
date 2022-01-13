@@ -29,6 +29,7 @@ type lambdaOneHandler struct {
 }
 
 type responseData struct {
+	CustomString  string    `json:"customString"`
 	RandomPokemon string    `json:"randomPokemon"`
 	SourceIP      string    `json:"sourceIP"`
 	Time          time.Time `json:"time"`
@@ -64,6 +65,7 @@ func (handler lambdaOneHandler) Handle(ctx context.Context, request *events.APIG
 	}
 
 	resp := responseData{
+		CustomString:  handler.customString,
 		RandomPokemon: pokemon,
 		SourceIP:      sourceIP,
 		Time:          now,
