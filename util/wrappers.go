@@ -45,6 +45,8 @@ func NewHandlerV2(typedHandler LambdaHTTPV2) lambda.Handler {
 
 // TODO
 func (handler wrappedHandlerV1) Invoke(ctx context.Context, request []byte) (response []byte, err error) {
+	println(string(request))
+
 	req := &events.APIGatewayProxyRequest{}
 	err = json.Unmarshal(request, req)
 	if err != nil {

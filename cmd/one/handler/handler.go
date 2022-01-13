@@ -38,19 +38,19 @@ type responseData struct {
 
 // TODO
 func New(logger *log.Logger, customString string) (handler lambda.Handler) {
-	return util.NewHandlerV2(lambdaOneHandler{
+	return util.NewHandlerV1(lambdaOneHandler{
 		customString: customString,
 		logger:       logger,
 	})
 }
 
 // TODO
-func (handler lambdaOneHandler) Handle(ctx context.Context, request *events.APIGatewayV2HTTPRequest) (response *events.APIGatewayV2HTTPResponse, err error) {
-	response = &events.APIGatewayV2HTTPResponse{}
+func (handler lambdaOneHandler) Handle(ctx context.Context, request *events.APIGatewayProxyRequest) (response *events.APIGatewayProxyResponse, err error) {
+	response = &events.APIGatewayProxyResponse{}
 
 	now := time.Now()
-	sourceIP := request.RequestContext.HTTP.SourceIP
-	userAgent := request.Headers["user-agent"]
+	sourceIP := request.RequestContext.Identity.SourceIP
+	userAgent := request.RequestContext.Identity.UserAgent
 
 	pokemon, err := randomPokemon(ctx)
 	if err != nil {
