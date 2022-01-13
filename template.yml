@@ -23,7 +23,7 @@ Resources:
       CodeUri: "cmd/one"
       Environment:
         Variables:
-          CUSTOM_ENV_VAR: "contact_moderation"
+          CUSTOM_ENV_VAR: "This is a custom value for Lambda one."
       Events:
         ApiEvent:
           Type: "HttpApi"
