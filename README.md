@@ -65,8 +65,8 @@ OpenAPI specification to be followed strictly by API Gateway.
 
 #### Switching the Lambda to use API Gateway V2 makes some parts of the request empty
 This is because AWS SAM is only giving the API Gateway V1 format. I _think_ `Type: "AWS::Serverless::Function"` needs to
-be changed in `template.yml` to something that indicates it's a Lambda that is triggered by API Gateway V2. I'm not sure
-if AWS SAM supports that use case yet.
+be changed in `template.yml` to something that indicates it's a Lambda that is triggered by API Gateway V2. It might
+also be the type of `ApiEvent`. I'm not sure if AWS SAM supports that use case yet.
 
 ### Lambda one
 #### The User Agent returned is always `Custom User Agent String`
