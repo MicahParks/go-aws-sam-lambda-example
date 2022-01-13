@@ -37,7 +37,7 @@ type responseData struct {
 }
 
 // TODO
-func New(logger *log.Logger, customString string) (handler lambda.Handler) {
+func New(logger *log.Logger, customString string) lambda.Handler {
 	return util.NewHandlerV1(lambdaOneHandler{
 		customString: customString,
 		logger:       logger,
@@ -74,7 +74,7 @@ func (handler lambdaOneHandler) Handle(ctx context.Context, request *events.APIG
 
 	data, err := json.MarshalIndent(resp, "", "    ")
 	if err != nil {
-		handler.logger.Println("Failed to JSON marshal response.\nError: %w", err)
+		handler.logger.Printf("Failed to JSON marshal response.\nError: %w", err)
 		response.StatusCode = http.StatusInternalServerError
 		return response, nil
 	}
