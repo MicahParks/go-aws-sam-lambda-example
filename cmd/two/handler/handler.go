@@ -24,14 +24,14 @@ type responseData struct {
 	PrevCustomPath string `json:"prevCustomPath"`
 }
 
-// TODO
+// New creates a new handler for Lambda two.
 func New(logger *log.Logger) lambda.Handler {
 	return util.NewHandlerV1(&lambdaTwoHandler{
 		logger: logger,
 	})
 }
 
-// TODO
+// Handle implements util.LambdaHTTPV1 interface. It contains the logic for the handler.
 func (handler *lambdaTwoHandler) Handle(_ context.Context, request *events.APIGatewayProxyRequest) (response *events.APIGatewayProxyResponse, err error) {
 	response = &events.APIGatewayProxyResponse{}
 

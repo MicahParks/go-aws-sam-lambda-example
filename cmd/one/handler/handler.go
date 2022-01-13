@@ -20,8 +20,8 @@ import (
 	"github.com/MicahParks/go-aws-sam-lambda-example/util"
 )
 
-// TODO
-var ErrNoPokemon = errors.New("the Pokemon API response did not contain a species name")
+// ErrNoPokemon indicates that the Pokemon API failed in some way
+var ErrNoPokemon = errors.New("failed to get Pokemon name")
 
 type lambdaOneHandler struct {
 	customString string
@@ -36,7 +36,7 @@ type responseData struct {
 	UserAgent     string    `json:"userAgent"`
 }
 
-// TODO
+// New creates a new handler for Lambda one.
 func New(logger *log.Logger, customString string) lambda.Handler {
 	return util.NewHandlerV1(lambdaOneHandler{
 		customString: customString,
@@ -44,7 +44,7 @@ func New(logger *log.Logger, customString string) lambda.Handler {
 	})
 }
 
-// TODO
+// Handle implements util.LambdaHTTPV1 interface. It contains the logic for the handler.
 func (handler lambdaOneHandler) Handle(ctx context.Context, request *events.APIGatewayProxyRequest) (response *events.APIGatewayProxyResponse, err error) {
 	response = &events.APIGatewayProxyResponse{}
 
@@ -113,7 +113,7 @@ func randomPokemon(ctx context.Context) (pokemon string, err error) {
 
 	pokemon = gjson.Get(string(body), "species.name").Str
 	if pokemon == "" {
-		return "", ErrNoPokemon
+		return "", fmt.Errorf("the Pokemon API response did not contain the species name: %w", ErrNoPokemon)
 	}
 
 	return pokemon, nil

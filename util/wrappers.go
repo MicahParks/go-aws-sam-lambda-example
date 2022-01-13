@@ -9,14 +9,14 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-// LambdaHTTPV1 TODO
-// This is for AWS Lambdas that are behind API Gateway version 1. (Version 2 is the latest.)
+// LambdaHTTPV1 is a typed interface to implement when the Lambda handles HTTP requests from V1 of API Gateway. It's
+// meant to be implemented, then wrapped with NewHandlerV1. API Gateway V2 is the latest.
 type LambdaHTTPV1 interface {
 	Handle(ctx context.Context, request *events.APIGatewayProxyRequest) (response *events.APIGatewayProxyResponse, err error)
 }
 
-// LambdaHTTPV2 TODO
-// This is for AWS Lambdas that are behind API Gateway version 2.
+// LambdaHTTPV2 is a typed interface to implement when the Lambda handles HTTP requests from V2 of API Gateway. It's
+// meant to be implemented, then wrapped with NewHandlerV2.
 type LambdaHTTPV2 interface {
 	Handle(ctx context.Context, request *events.APIGatewayV2HTTPRequest) (response *events.APIGatewayV2HTTPResponse, err error)
 }
@@ -29,21 +29,24 @@ type wrappedHandlerV2 struct {
 	LambdaHTTPV2
 }
 
-// TODO
+// NewHandlerV1 is a helper function that takes a typed handler's interface implementation and makes it compatible with
+// lambda.Handler.
 func NewHandlerV1(typedHandler LambdaHTTPV1) lambda.Handler {
 	return wrappedHandlerV1{
 		LambdaHTTPV1: typedHandler,
 	}
 }
 
-// TODO
+// NewHandlerV2 is a helper function that takes a typed handler's interface implementation and makes it compatible with
+// lambda.Handler.
 func NewHandlerV2(typedHandler LambdaHTTPV2) lambda.Handler {
 	return wrappedHandlerV2{
 		LambdaHTTPV2: typedHandler,
 	}
 }
 
-// TODO
+// Invoke implements the lambda.Handler interface by taking an API Gateway V1 typed handler implementation and
+// transforming the input and output data appropriately.
 func (handler wrappedHandlerV1) Invoke(ctx context.Context, request []byte) (response []byte, err error) {
 	req := &events.APIGatewayProxyRequest{}
 	err = json.Unmarshal(request, req)
@@ -64,7 +67,8 @@ func (handler wrappedHandlerV1) Invoke(ctx context.Context, request []byte) (res
 	return response, nil
 }
 
-// TODO
+// Invoke implements the lambda.Handler interface by taking an API Gateway V2 typed handler implementation and
+// transforming the input and output data appropriately.
 func (handler wrappedHandlerV2) Invoke(ctx context.Context, request []byte) (response []byte, err error) {
 	req := &events.APIGatewayV2HTTPRequest{}
 	err = json.Unmarshal(request, req)
