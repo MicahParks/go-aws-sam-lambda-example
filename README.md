@@ -83,7 +83,7 @@ Please downgrade AWS SAM to version `1.12.0`.
 See [this GitHub issue](https://github.com/aws/aws-sam-cli/issues/2510#issuecomment-827497820).
 
 ### Lambda two
-#### The value of `prevCustomPath` returned by the API is always an empty string or "wrong"
+#### The value of `prevCustomPath` returned by the API is always an empty string or seemingly wrong
 This is because AWS SAM spins up and spins down a single Lambda _instance_ for every request. In production AWS will
 spin up Lambdas until the number of requests per second coming in dictate that _instances_ should be spun down. This is
 an example of how data can be shared across _invocations_, but not _instances_.
