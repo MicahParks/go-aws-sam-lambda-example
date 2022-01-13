@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "An example Golang AWS SAM Lambda project."
+Transform: "AWS::Serverless-2016-10-31"
+
+
+Parameters:
+  VaultToken:
+    Type: "String"
+
+
+Globals:
+  Function:
+    Handler: "main"
+    Timeout: 10
+    Runtime: "go1.x"
+
+
+Resources:
+
+  exampleOne:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      CodeUri: "cmd/one"
+      Environment:
+        Variables:
+          CUSTOM_ENV_VAR: "contact_moderation"
+      Events:
+        ApiEvent:
+          Type: "HttpApi"
+        Api:
+          Type: "Api"
+          Properties:
+            Path: "/one"
+            Method: "post"
+
+  exampleTwo:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      CodeUri: "cmd/two"
+      Events:
+        ApiEvent:
+          Type: "HttpApi"
+        Api:
+          Type: "Api"
+          Properties:
+            Path: "/two/{customPath}"
+            Method: "post"
