@@ -1,6 +1,15 @@
 # Golang AWS SAM Lambda example
 This example project shows how to use AWS SAM with two Golang Lambdas.
 
+## Quickstart
+After installing AWS SAM version 1.12.0, run the following command to build the containers and run the service locally:
+```bash
+sam build && sam local start-api
+```
+
+Remote debugging inside these containers is also possible. Please read through the command line arguments
+of `sam local start-api` to find the options that work with your system.
+
 ## Files
 * `cmd` holds the executables that can be built and put into AWS Lambdas.
 * `cmd/one` and `cmd/two` are distinctly different Lambdas that handle different API URL paths.
