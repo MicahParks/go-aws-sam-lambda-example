@@ -21,9 +21,6 @@ Resources:
     Type: "AWS::Serverless::Function"
     Properties:
       CodeUri: "cmd/one"
-      Environment:
-        Variables:
-          CUSTOM_ENV_VAR: "This is a value from an environment variable for Lambda one."
       Events:
         ApiEvent:
           Type: "HttpApi"
@@ -32,16 +29,3 @@ Resources:
           Properties:
             Path: "/one"
             Method: "get"
-
-  exampleTwo:
-    Type: "AWS::Serverless::Function"
-    Properties:
-      CodeUri: "cmd/two"
-      Events:
-        ApiEvent:
-          Type: "HttpApi"
-        Api:
-          Type: "Api"
-          Properties:
-            Path: "/two/{customPath}"
-            Method: "post"

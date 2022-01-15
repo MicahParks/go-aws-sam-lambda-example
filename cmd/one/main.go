@@ -3,9 +3,7 @@ package main
 import (
 	"context"
 	"log"
-	"math/rand"
 	"os"
-	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
 
@@ -24,12 +22,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	customString := os.Getenv("CUSTOM_ENV_VAR")
-
-	// Initialize a random seed for the Pokémon API.
-	rand.Seed(time.Now().UnixNano())
-
-	h := handler.New(logger, customString)
+	h := handler.New(logger)
 
 	lambda.StartHandlerWithContext(ctx, h)
 }
