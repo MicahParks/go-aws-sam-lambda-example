@@ -2,7 +2,7 @@
 This example project shows how to use AWS SAM with two Golang Lambdas.
 
 ## Quickstart
-After installing AWS SAM version 1.12.0, run the following command to build the containers and run the service locally:
+After installing AWS SAM, run the following command to build the containers and run the service locally:
 ```bash
 sam build && sam local start-api
 ```
@@ -86,10 +86,9 @@ This means the Lambda was unable to successfully get a Pokemon from an external 
 
 This could be because it failed to connect over the internet. But a more likely scenario is a known bug in AWS SAM. This
 bug causes AWS SAM to always pass an expired `context.Context` to the Lambda handler. Since the context is always
-expired before the request is sent, it will never send.
-
-Please downgrade AWS SAM to version `1.12.0`.
-See [this GitHub issue](https://github.com/aws/aws-sam-cli/issues/2510#issuecomment-827497820).
+expired before the request is sent, it will never send. This has been fixed in more recent versions of AWS SAM, so
+upgrade your version if you are affected by it.
+Relevant [GitHub issue](https://github.com/aws/aws-sam-cli/issues/2510#issuecomment-827497820).
 
 ### Lambda two
 #### The value of `prevCustomPath` returned by the API is always an empty string or seemingly wrong
